@@ -111,3 +111,32 @@ I already use branches, commits, pushes, and pull requests regularly during my i
 Branches give each developer a separate place to work, while pull requests provide an opportunity for the changes to be reviewed before they become part of the main codebase.
 
 For me, the most important part is that `main` should not be treated as a place where everyone can randomly push unfinished changes. The branch and review process provides a safer and more organized way for a team to work together.
+
+
+# Git Understanding
+
+## What caused the conflict?
+
+The merge conflict happened because I had two different branches that changed the same part of the same file.
+
+I first made a change to the file in a separate branch. Then I switched back to `main` and changed the same part of the file in a different way. After committing both changes, I tried to merge the branch into `main`.
+
+Git could not automatically decide which change should be kept because both branches had modified the same section. This caused the merge conflict.
+
+## How did you resolve it?
+
+I resolved the conflict by opening the file in VS Code and looking at the changes from both branches.
+
+Git marked the conflicting section so I could see the version from `main` and the version from the branch. I reviewed both changes and decided which version should be kept for the final file.
+
+After removing the conflict markers and saving the correct version, I staged the resolved file with `git add` and completed the merge with a commit.
+
+## What did you learn?
+
+I learned that merge conflicts are not necessarily errors in Git. They happen when Git cannot automatically combine changes because different branches modified the same part of a file.
+
+Before this exercise, I knew that merge conflicts could happen, but I had not intentionally created and resolved one myself. Doing the process helped me understand what Git is actually showing when a conflict occurs.
+
+I also learned that the important part of resolving a conflict is reviewing both versions carefully instead of simply choosing one without understanding the changes. After resolving the conflict, the final version should contain the changes that are actually needed.
+
+
