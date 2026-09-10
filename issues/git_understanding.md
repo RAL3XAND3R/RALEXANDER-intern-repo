@@ -140,7 +140,58 @@ Before this exercise, I knew that merge conflicts could happen, but I had not in
 I also learned that the important part of resolving a conflict is reviewing both versions carefully instead of simply choosing one without understanding the changes. After resolving the conflict, the final version should contain the changes that are actually needed.
 
 
-# Git Understanding
+
+
+## What does each command do?
+
+### `git checkout main -- <file>`
+
+This command restores a specific file to the version that exists on `main`.
+
+It is useful when I have made changes to a file but want to replace that file with the version from `main` without affecting other files or changes I am working on.
+
+### `git cherry-pick <commit>`
+
+`git cherry-pick` allows me to apply a specific commit from another branch to my current branch.
+
+Instead of merging the entire branch, I can select one particular commit and bring only that change into the branch I am working on.
+
+### `git log`
+
+`git log` shows the commit history of the repository.
+
+It allows me to see previous commits, their hashes, authors, dates, and commit messages. I can use it to understand how the project has changed over time.
+
+### `git blame <file>`
+
+`git blame` shows which commit and author last modified each line of a file.
+
+This can be useful when I want to understand where a specific change came from or find the commit that introduced a particular line.
+
+## When would you use these commands in a real project?
+
+I would use `git checkout main -- <file>` when I need to restore one specific file from `main` without wanting to discard changes in other files.
+
+I would use `git cherry-pick` when I need one specific change from another branch but do not want to merge the entire branch. This could be useful for bringing a small fix into another branch.
+
+I would use `git log` regularly when investigating the history of a project, looking for previous changes, or trying to understand how the code evolved.
+
+I would use `git blame` when investigating a specific line of code and wanting to know which commit changed it. This could help when debugging or when I need more context about why a particular change was made.
+
+These commands can be especially useful in long-running projects because there can be many developers, branches, and commits, making it important to understand the history of the code.
+
+## What surprised you while testing these commands?
+
+What surprised me most was how much information Git keeps about the history of a project.
+
+I already use commands like `git log`, `git checkout`, commits, and branches regularly, but this exercise helped me understand some of the more specific uses of these commands.
+
+I found `git cherry-pick` particularly interesting because I can take one specific commit from another branch without merging everything from that branch.
+
+I also found `git blame` useful because it makes it easy to see the history behind individual lines instead of only looking at the overall commit history.
+
+Overall, this exercise showed me that Git has many tools for working with changes and history, not just the basic commands I use every day.
+
 
 ## What does `git bisect` do?
 
