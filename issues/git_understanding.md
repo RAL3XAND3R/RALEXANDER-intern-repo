@@ -140,3 +140,32 @@ Before this exercise, I knew that merge conflicts could happen, but I had not in
 I also learned that the important part of resolving a conflict is reviewing both versions carefully instead of simply choosing one without understanding the changes. After resolving the conflict, the final version should contain the changes that are actually needed.
 
 
+# Git Understanding
+
+## What does `git bisect` do?
+
+`git bisect` is a Git command that helps find which commit introduced a bug. It uses a binary search through the commit history instead of making me check every commit one by one.
+
+To use it, I need to identify one commit where the project is known to work and another commit where the bug is present. Git then checks commits between those points, and I tell Git whether each version is good or bad.
+
+Based on my answers, Git keeps narrowing down the possible commits until it identifies the commit that introduced the problem.
+
+## When would you use it in a real-world debugging situation?
+
+I would use `git bisect` when a project was working correctly at some point in the past but a bug has appeared later, and there are many commits between the working and broken versions.
+
+For example, if a bug appeared after several days of development and many developers had made changes during that time, checking every commit manually could take a long time. `git bisect` would make it easier to narrow down the problem and identify the commit responsible.
+
+## How does it compare to manually reviewing commits?
+
+Manually reviewing commits means going through the changes one by one and trying to find which change caused the problem. This can work for a small number of commits, but it can become slow and difficult in a large project.
+
+`git bisect` is more efficient because it uses a binary search. Instead of checking every commit, Git moves between commits and reduces the number of possible problematic commits after each test.
+
+I found this useful because it turns what could be a long debugging process into a much more systematic process.
+
+## What I learned
+
+The main thing I learned is that `git bisect` is useful when the exact commit that introduced a bug is unknown. I also learned that I do not have to manually move through every commit myself. Git helps choose which commits to test based on whether I mark them as good or bad.
+
+This exercise also helped me understand the value of having a clear commit history. When commits are organized and changes are separated properly, tools like `git bisect` become much more useful for debugging.
