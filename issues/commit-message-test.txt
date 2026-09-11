@@ -1,2 +1,4 @@
 Testing Git commit messages.
 This line was added to demonstrate an overly detailed commit message.
+
+Clear commit messages make the project history easier to understand.
