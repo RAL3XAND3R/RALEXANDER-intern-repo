@@ -1,1 +1,2 @@
 Testing Git commit messages.
+This line was added to demonstrate an overly detailed commit message.
