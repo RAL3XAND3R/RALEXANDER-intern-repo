@@ -139,9 +139,6 @@ Before this exercise, I knew that merge conflicts could happen, but I had not in
 
 I also learned that the important part of resolving a conflict is reviewing both versions carefully instead of simply choosing one without understanding the changes. After resolving the conflict, the final version should contain the changes that are actually needed.
 
-
-
-
 ## What does each command do?
 
 ### `git checkout main -- <file>`
@@ -222,50 +219,28 @@ The main thing I learned is that `git bisect` is useful when the exact commit th
 This exercise also helped me understand the value of having a clear commit history. When commits are organized and changes are separated properly, tools like `git bisect` become much more useful for debugging.
 
 
-## What does each command do?
+## Writing Meaningful Commit Messages
 
-### `git checkout main -- <file>`
+### What makes a good commit message?
 
-This command allows me to restore a specific file to the version that exists in `main`.
+A good commit message should be clear, specific, and concise. It should give enough information to understand what changed without including unnecessary details.
 
-It is useful when I have made changes to a file but want to discard those changes and get the version from `main`, without affecting other files in my working directory.
+While testing different commit message styles, I noticed that a message like `fixed stuff` does not provide enough information about the change. A very long message can also make the history harder to read.
 
-### `git cherry-pick <commit>`
+A good message should describe the main purpose of the change in a simple way, such as `Improve commit message example`.
 
-`git cherry-pick` allows me to take a specific commit from another branch and apply its changes to my current branch.
+### How does a clear commit message help in team collaboration?
 
-Instead of merging the entire branch, I can choose one particular commit. This is useful when I only need one specific change from another branch.
+Clear commit messages make it easier for other developers to understand what has changed without having to inspect every commit in detail.
 
-### `git log`
+They are especially useful when working with branches and pull requests because the commit history gives the team a quick overview of the work that was done.
 
-`git log` allows me to view the commit history of a repository.
+Clear messages also make it easier to investigate previous changes when working on a project with multiple developers.
 
-It shows information such as commit hashes, authors, dates, and commit messages. It helps me understand how the project has changed and how the current code reached its current state.
+### How can poor commit messages cause issues later?
 
-### `git blame <file>`
+Poor commit messages can make the project history confusing, especially after a project has been developed for a long time.
 
-`git blame` shows information about who last modified each line of a file and which commit made the change.
+Messages such as `fixed stuff`, `update`, or `changes` do not explain what was actually changed. Later, if someone needs to find when or why something was changed, these messages provide very little useful information.
 
-This can help when I am trying to understand where a particular line came from or when I want to find the commit related to a specific change.
-
-## When would you use these commands in a real project?
-
-I would use `git checkout main -- <file>` when I need to restore one specific file from `main` without affecting the other files or changes I am currently working on.
-
-I would use `git cherry-pick` when I need to bring one specific commit from another branch into my current branch without merging all the other changes from that branch.
-
-I would use `git log` when I need to investigate the history of a project, understand previous changes, or find a specific commit. This would be especially useful in a long-running project with many developers and many commits.
-
-I would use `git blame` when I need to understand the history of a specific line in a file. For example, if I find a piece of code that I do not understand or a line that may be related to a bug, I can use it to see which commit changed it and investigate that change further.
-
-## What surprised you while testing these commands?
-
-What surprised me most was how much control Git gives me over individual changes and the history of a project.
-
-I already use Git regularly during my internship, especially branches, commits, pushes, and `git log`, but testing these commands helped me understand some of their more specific uses.
-
-I found `git cherry-pick` particularly interesting because it allows me to take one specific commit from another branch instead of merging the entire branch.
-
-I also found `git blame` useful because it lets me look at the history of individual lines instead of only looking at commits as a whole.
-
-Overall, this exercise helped me see that Git is not only useful for saving and sharing code. It also provides tools for managing specific changes and investigating how a project has evolved over time.
+This exercise showed me that commit messages may seem small, but they become important when a repository has many commits and multiple developers working on it.
