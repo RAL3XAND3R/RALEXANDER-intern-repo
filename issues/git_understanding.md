@@ -140,7 +140,6 @@ Before this exercise, I knew that merge conflicts could happen, but I had not in
 I also learned that the important part of resolving a conflict is reviewing both versions carefully instead of simply choosing one without understanding the changes. After resolving the conflict, the final version should contain the changes that are actually needed.
 
 
-# Git Understanding
 
 ## What does `git bisect` do?
 
@@ -169,3 +168,30 @@ I found this useful because it turns what could be a long debugging process into
 The main thing I learned is that `git bisect` is useful when the exact commit that introduced a bug is unknown. I also learned that I do not have to manually move through every commit myself. Git helps choose which commits to test based on whether I mark them as good or bad.
 
 This exercise also helped me understand the value of having a clear commit history. When commits are organized and changes are separated properly, tools like `git bisect` become much more useful for debugging.
+
+
+## Writing Meaningful Commit Messages
+
+### What makes a good commit message?
+
+A good commit message should be clear, specific, and concise. It should give enough information to understand what changed without including unnecessary details.
+
+While testing different commit message styles, I noticed that a message like `fixed stuff` does not provide enough information about the change. A very long message can also make the history harder to read.
+
+A good message should describe the main purpose of the change in a simple way, such as `Improve commit message example`.
+
+### How does a clear commit message help in team collaboration?
+
+Clear commit messages make it easier for other developers to understand what has changed without having to inspect every commit in detail.
+
+They are especially useful when working with branches and pull requests because the commit history gives the team a quick overview of the work that was done.
+
+Clear messages also make it easier to investigate previous changes when working on a project with multiple developers.
+
+### How can poor commit messages cause issues later?
+
+Poor commit messages can make the project history confusing, especially after a project has been developed for a long time.
+
+Messages such as `fixed stuff`, `update`, or `changes` do not explain what was actually changed. Later, if someone needs to find when or why something was changed, these messages provide very little useful information.
+
+This exercise showed me that commit messages may seem small, but they become important when a repository has many commits and multiple developers working on it.
