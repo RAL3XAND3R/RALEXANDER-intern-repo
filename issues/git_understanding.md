@@ -139,56 +139,7 @@ Before this exercise, I knew that merge conflicts could happen, but I had not in
 
 I also learned that the important part of resolving a conflict is reviewing both versions carefully instead of simply choosing one without understanding the changes. After resolving the conflict, the final version should contain the changes that are actually needed.
 
-## What does each command do?
-
-### `git checkout main -- <file>`
-
-This command restores a specific file to the version that exists on `main`.
-
-It is useful when I have made changes to a file but want to replace that file with the version from `main` without affecting other files or changes I am working on.
-
-### `git cherry-pick <commit>`
-
-`git cherry-pick` allows me to apply a specific commit from another branch to my current branch.
-
-Instead of merging the entire branch, I can select one particular commit and bring only that change into the branch I am working on.
-
-### `git log`
-
-`git log` shows the commit history of the repository.
-
-It allows me to see previous commits, their hashes, authors, dates, and commit messages. I can use it to understand how the project has changed over time.
-
-### `git blame <file>`
-
-`git blame` shows which commit and author last modified each line of a file.
-
-This can be useful when I want to understand where a specific change came from or find the commit that introduced a particular line.
-
-## When would you use these commands in a real project?
-
-I would use `git checkout main -- <file>` when I need to restore one specific file from `main` without wanting to discard changes in other files.
-
-I would use `git cherry-pick` when I need one specific change from another branch but do not want to merge the entire branch. This could be useful for bringing a small fix into another branch.
-
-I would use `git log` regularly when investigating the history of a project, looking for previous changes, or trying to understand how the code evolved.
-
-I would use `git blame` when investigating a specific line of code and wanting to know which commit changed it. This could help when debugging or when I need more context about why a particular change was made.
-
-These commands can be especially useful in long-running projects because there can be many developers, branches, and commits, making it important to understand the history of the code.
-
-## What surprised you while testing these commands?
-
-What surprised me most was how much information Git keeps about the history of a project.
-
-I already use commands like `git log`, `git checkout`, commits, and branches regularly, but this exercise helped me understand some of the more specific uses of these commands.
-
-I found `git cherry-pick` particularly interesting because I can take one specific commit from another branch without merging everything from that branch.
-
-I also found `git blame` useful because it makes it easy to see the history behind individual lines instead of only looking at the overall commit history.
-
-Overall, this exercise showed me that Git has many tools for working with changes and history, not just the basic commands I use every day.
-
+      
 
 ## What does `git bisect` do?
 
@@ -244,3 +195,43 @@ Poor commit messages can make the project history confusing, especially after a 
 Messages such as `fixed stuff`, `update`, or `changes` do not explain what was actually changed. Later, if someone needs to find when or why something was changed, these messages provide very little useful information.
 
 This exercise showed me that commit messages may seem small, but they become important when a repository has many commits and multiple developers working on it.
+
+
+
+## What is a Pull Request and why is it used?
+
+A Pull Request (PR) is a way to propose changes from one branch to another, usually into the main branch. It gives other team members a chance to review the changes before they are merged.
+
+PRs are useful because they make it easier to review code, discuss changes, catch possible problems, and keep the main branch more stable. They also provide a history of why a change was made and what was discussed before it was merged.
+
+## Why are Pull Requests important in a team workflow?
+
+Pull Requests are important because developers usually work on separate branches instead of making changes directly to the main branch. Once the work is ready, the PR gives the rest of the team an opportunity to review it.
+
+This helps catch bugs or problems before they reach the main branch. It also makes collaboration easier because developers can leave comments, suggest changes, and discuss the implementation.
+
+In my case, this is already part of my normal development workflow, so the process of creating branches, pushing changes, opening PRs, receiving feedback, and merging them is something I use regularly.
+
+## What makes a well-structured Pull Request?
+
+I think a good PR should be clear and focused. The title should explain what the PR is about, and the description should give enough context about what was changed and why.
+
+A well-structured PR should also avoid mixing unrelated changes together. Keeping the changes focused makes the review easier and makes it less likely that something important gets missed.
+
+Linking the PR to the related issue is also useful because it gives more context about the reason behind the change.
+
+## What did I learn from reviewing an open-source PR?
+
+Reviewing a public open-source PR helped me see how code reviews work when many developers are involved in the same project.
+
+One thing I noticed is that the discussion is not only about whether the code works. Reviewers also ask questions about the implementation, suggest improvements, and sometimes request changes before approving the PR.
+
+It also showed me that PR discussions can contain several rounds of feedback. The author can make additional commits and update the PR until the reviewers are satisfied with the changes.
+
+Overall, it helped me understand that a PR is not just a way to merge code. It is also a place for collaboration and communication between developers.
+
+## Reflection
+
+The main thing I took from this task is that Pull Requests are an important part of keeping development organized. Even though I already use branches and PRs regularly, reviewing an open-source PR gave me a better perspective on the review and discussion side of the process.
+
+A good PR should make it easy for another developer to understand what was changed, why it was changed, and how the changes were tested. Keeping PRs focused and providing enough context makes the whole review process easier for everyone.
