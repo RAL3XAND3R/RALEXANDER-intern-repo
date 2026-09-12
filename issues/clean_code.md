@@ -178,3 +178,18 @@ Before the refactoring, `copyIssues()` contained several different responsibilit
 After the refactoring, each operation has its own function with a clear responsibility. The main `copyIssues()` function is now easier to follow because it mainly coordinates the different operations instead of containing all of the implementation details.
 
 The functionality of the code was kept the same, but the structure is now cleaner, easier to read, and easier to maintain.
+
+
+## Avoiding Code Duplication
+
+### What were the issues with duplicated code?
+
+The `fetchAll()` and `fetchAllIssues()` functions contained very similar pagination logic. Both functions used a loop to request multiple pages from the GitHub API, combined the results, checked if there was another page, and then increased the page number.
+
+This duplication made the code harder to maintain because the same logic existed in more than one place. If the pagination logic needed to be changed, I would have to update it in multiple places, which could also lead to inconsistencies.
+
+### How did refactoring improve maintainability?
+
+I refactored `fetchAllIssues()` so that it uses the existing `fetchAll()` function instead of repeating the pagination logic.
+
+Now, the pagination logic is handled in one place and can be reused by different parts of the application. This makes the code easier to maintain because future changes to the pagination process only need to be made in `fetchAll()`.
