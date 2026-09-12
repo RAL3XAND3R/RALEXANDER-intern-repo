@@ -239,3 +239,20 @@ Handling errors and invalid inputs makes the application more reliable because i
 
 The guard clause makes the problem easier to identify because the function immediately reports that the URL is missing. This makes the code safer and easier to debug while keeping the normal behavior unchanged.
 
+
+
+## Writing Unit Tests for Clean Code
+
+### How do unit tests help keep code clean?
+
+Unit tests help keep code clean by making it easier to verify that individual functions behave as expected. They also make refactoring safer because the tests can quickly show if a change breaks existing behavior.
+
+For this issue, I added unit tests for the `shouldSkipIssue()` function. The tests verify that normal issues are not skipped, pull requests are skipped, and issues with normal milestones are not skipped.
+
+### What issues did you find while testing?
+
+While testing, I found that importing `duplicate-repo.js` caused the `duplicateRepo()` function to run automatically. This made Jest start the repository duplication process instead of only testing the function.
+
+I fixed this by using `require.main === module`, so `duplicateRepo()` only runs when the file is executed directly. This allows Jest to import and test individual functions without starting the full repository duplication process.
+
+After the change, all three unit tests passed successfully.
