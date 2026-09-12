@@ -1,35 +1,42 @@
-const { shouldSkipIssue } = require('./duplicate-repo');
+const { shouldSkipIssue, processIssue } = require('./duplicate-repo');
 
 describe('shouldSkipIssue', () => {
-  test('should return false for a normal issue', () => {
+  test('should skip a pull request', () => {
     const issue = {
-      title: 'Normal issue',
-      pull_request: undefined,
-      milestone: null,
-    };
-
-    expect(shouldSkipIssue(issue)).toBe(false);
-  });
-
-  test('should return true for a pull request', () => {
-    const issue = {
-      title: 'Pull request',
+      title: 'Test pull request',
       pull_request: {},
-      milestone: null,
     };
 
     expect(shouldSkipIssue(issue)).toBe(true);
   });
 
-  test('should return false for an issue with a normal milestone', () => {
+  test('should not skip a regular issue', () => {
     const issue = {
-      title: 'Issue with milestone',
+      title: 'Test issue',
       pull_request: undefined,
-      milestone: {
-        title: 'Normal milestone',
-      },
+      milestone: null,
     };
 
     expect(shouldSkipIssue(issue)).toBe(false);
+  });
+});
+
+describe('processIssue', () => {
+  test('should process a valid issue', () => {
+    const issue = {
+      title: 'Test issue',
+      pull_request: undefined,
+    };
+
+    expect(processIssue(issue)).toBe('Processing issue: Test issue');
+  });
+
+  test('should skip a pull request', () => {
+    const issue = {
+      title: 'Test pull request',
+      pull_request: {},
+    };
+
+    expect(processIssue(issue)).toBe('Skipping issue');
   });
 });
