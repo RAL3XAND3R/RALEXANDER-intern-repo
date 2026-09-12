@@ -241,4 +241,10 @@ async function duplicateRepo() {
   console.log('✅ Repository duplication completed successfully!');
 }
 
-duplicateRepo();
+if (require.main === module) {
+  duplicateRepo();
+}
+
+module.exports = {
+  shouldSkipIssue,
+};
