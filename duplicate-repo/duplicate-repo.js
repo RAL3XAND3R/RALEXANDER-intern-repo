@@ -154,25 +154,32 @@ function addMilestoneToPayload(issue, payload, milestoneMap) {
 }
 
 async function updateExistingIssue(issue, existingIssue, milestoneMap) {
-  if (
-    issue.milestone &&
-    milestoneMap[issue.milestone.number] &&
-    existingIssue.milestone?.number !== milestoneMap[issue.milestone.number]
-  ) {
-    console.log(`🔄 Updating milestone for issue: ${issue.title}`);
+  const milestoneNumber =
+    issue.milestone && milestoneMap[issue.milestone.number];
 
-    await axios.patch(
-      `${GITHUB_API}/${DEST_REPO}/issues/${existingIssue.number}`,
-      {
-        milestone: milestoneMap[issue.milestone.number],
-      },
-      HEADERS
-    );
-  } else {
+  if (!milestoneNumber) {
     console.log(
       `🔄 Skipping existing issue: ${issue.title} (Milestone is correct)`
     );
+    return;
   }
+
+  if (existingIssue.milestone?.number === milestoneNumber) {
+    console.log(
+      `🔄 Skipping existing issue: ${issue.title} (Milestone is correct)`
+    );
+    return;
+  }
+
+  console.log(`🔄 Updating milestone for issue: ${issue.title}`);
+
+  await axios.patch(
+    `${GITHUB_API}/${DEST_REPO}/issues/${existingIssue.number}`,
+    {
+      milestone: milestoneNumber,
+    },
+    HEADERS
+  );
 }
 
 async function createIssue(issue, payload) {

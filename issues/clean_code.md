@@ -193,3 +193,18 @@ This duplication made the code harder to maintain because the same logic existed
 I refactored `fetchAllIssues()` so that it uses the existing `fetchAll()` function instead of repeating the pagination logic.
 
 Now, the pagination logic is handled in one place and can be reused by different parts of the application. This makes the code easier to maintain because future changes to the pagination process only need to be made in `fetchAll()`.
+
+
+## Refactoring Code for Simplicity
+
+### What made the original code complex?
+
+The original `updateExistingIssue()` function had a long conditional that checked several things at the same time. It checked if the issue had a milestone, if the milestone existed in the map, and if the existing issue had a different milestone.
+
+The same `milestoneMap[issue.milestone.number]` expression was also used multiple times, which made the condition harder to read.
+
+### How did refactoring improve it?
+
+I simplified the function by storing the milestone number in a variable and using early returns for the cases where no update was needed.
+
+This made the function easier to follow because it now handles the simple cases first and only reaches the update logic when an update is actually necessary. The code is more readable and easier to maintain while keeping the same functionality.
