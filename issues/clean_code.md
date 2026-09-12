@@ -223,3 +223,19 @@ For this issue, I improved a comment in the `fetchAll()` function so that it exp
 Comments should be avoided when they only describe what the code is already clearly doing. For example, a comment like `// Increment page` above `page++` would not provide much value because the code already makes this obvious.
 
 When code is difficult to understand, it is usually better to improve the code itself by using clearer names, simplifying conditions, or breaking large functions into smaller ones instead of adding more comments.
+
+
+## Handling Errors & Edge Cases
+
+### What was the issue with the original code?
+
+The original `fetchAll()` function did not validate the `url` parameter before using it. If an invalid or empty URL was provided, the function would continue and eventually try to make an invalid API request.
+
+I added a guard clause to check that a URL is provided before continuing. If the URL is missing, the function now throws an error with a clear message.
+
+### How does handling errors improve reliability?
+
+Handling errors and invalid inputs makes the application more reliable because it prevents unexpected values from continuing through the program and causing confusing failures later.
+
+The guard clause makes the problem easier to identify because the function immediately reports that the URL is missing. This makes the code safer and easier to debug while keeping the normal behavior unchanged.
+
