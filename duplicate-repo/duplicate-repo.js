@@ -30,10 +30,13 @@ async function fetchAll(url) {
   let page = 1;
 
   while (true) {
+    const separator = url.includes('?') ? '&' : '?';
+
     const { data, headers } = await axios.get(
-      `${url}?per_page=100&page=${page}`,
+      `${url}${separator}per_page=100&page=${page}`,
       HEADERS
     );
+
     results = results.concat(data);
 
     if (!headers.link || !headers.link.includes('rel="next"')) break;
@@ -104,18 +107,15 @@ async function copyMilestones() {
 // Fetch all issues (open and closed)
 async function fetchAllIssues(repo) {
   let issues = [];
+
   for (const state of ['open', 'closed']) {
-    let page = 1;
-    while (true) {
-      const { data, headers } = await axios.get(
-        `${GITHUB_API}/${repo}/issues?state=${state}&per_page=100&page=${page}`,
-        HEADERS
-      );
-      issues = issues.concat(data);
-      if (!headers.link || !headers.link.includes('rel="next"')) break;
-      page++;
-    }
+    const stateIssues = await fetchAll(
+      `${GITHUB_API}/${repo}/issues?state=${state}`
+    );
+
+    issues = issues.concat(stateIssues);
   }
+
   return issues;
 }
 
@@ -153,16 +153,11 @@ function addMilestoneToPayload(issue, payload, milestoneMap) {
   }
 }
 
-async function updateExistingIssue(
-  issue,
-  existingIssue,
-  milestoneMap
-) {
+async function updateExistingIssue(issue, existingIssue, milestoneMap) {
   if (
     issue.milestone &&
     milestoneMap[issue.milestone.number] &&
-    existingIssue.milestone?.number !==
-      milestoneMap[issue.milestone.number]
+    existingIssue.milestone?.number !== milestoneMap[issue.milestone.number]
   ) {
     console.log(`🔄 Updating milestone for issue: ${issue.title}`);
 
