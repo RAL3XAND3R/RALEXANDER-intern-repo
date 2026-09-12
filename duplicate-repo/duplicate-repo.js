@@ -1,3 +1,4 @@
+
 require('dotenv').config();
 const axios = require('axios');
 
@@ -21,6 +22,10 @@ const HEADERS = {
 
 const GITHUB_API = 'https://api.github.com/repos';
 
+const ITEMS_PER_PAGE = 100;
+const ISSUE_STATES = ['open', 'closed'];
+const NEXT_PAGE_RELATION = 'rel="next"';
+
 // 🚨 **Milestones to exclude**
 const MILESTONES_TO_EXCLUDE = [];
 
@@ -37,13 +42,13 @@ async function fetchAll(url) {
     const separator = url.includes('?') ? '&' : '?';
 
     const { data, headers } = await axios.get(
-      `${url}${separator}per_page=100&page=${page}`,
+      `${url}${separator}per_page=${ITEMS_PER_PAGE}&page=${page}`,
       HEADERS
     );
 
     results = results.concat(data);
 
-    if (!headers.link || !headers.link.includes('rel="next"')) break;
+    if (!headers.link || !headers.link.includes(NEXT_PAGE_RELATION)) break;
 
     page++;
   }
@@ -112,7 +117,7 @@ async function copyMilestones() {
 async function fetchAllIssues(repo) {
   let issues = [];
 
-  for (const state of ['open', 'closed']) {
+  for (const state of ISSUE_STATES) {
     const stateIssues = await fetchAll(
       `${GITHUB_API}/${repo}/issues?state=${state}`
     );
@@ -241,10 +246,20 @@ async function duplicateRepo() {
   console.log('✅ Repository duplication completed successfully!');
 }
 
+function processIssue(issue) {
+  if (!issue || issue.pull_request || !issue.title) {
+    return 'Skipping issue';
+  }
+
+  return `Processing issue: ${issue.title}`;
+}
+
+
 if (require.main === module) {
   duplicateRepo();
 }
 
 module.exports = {
   shouldSkipIssue,
+  processIssue,
 };

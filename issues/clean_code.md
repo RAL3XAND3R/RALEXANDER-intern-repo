@@ -256,3 +256,47 @@ While testing, I found that importing `duplicate-repo.js` caused the `duplicateR
 I fixed this by using `require.main === module`, so `duplicateRepo()` only runs when the file is executed directly. This allows Jest to import and test individual functions without starting the full repository duplication process.
 
 After the change, all three unit tests passed successfully.
+
+
+
+# Identifying & Fixing Code Smells
+
+## What code smells did you find in your code?
+
+While working on this issue, I found several code smells in the project. Some of them had already been addressed in previous issues, but they are still important examples of code smells.
+
+The main ones I worked with were:
+
+- **Magic Numbers & Strings:** The code had hardcoded values such as `100` for the number of items per page and strings related to issue states and pagination. I replaced these with constants such as `ITEMS_PER_PAGE`, `ISSUE_STATES`, and `NEXT_PAGE_RELATION`.
+- **Long Functions:** The `copyIssues()` function was doing several different things at once. I broke it into smaller functions such as `shouldSkipIssue()`, `buildIssuePayload()`, `addMilestoneToPayload()`, `updateExistingIssue()`, and `createIssue()`.
+- **Duplicate Code:** The pagination logic was repeated in more than one function. I moved the common logic into `fetchAll()` so it could be reused instead of duplicated.
+- **Inconsistent Naming:** I worked on using names that clearly describe what variables and functions are responsible for. Clear names make the code easier to understand without having to read every line.
+- **Deeply Nested Conditionals:** I created a small `processIssue()` example to demonstrate how multiple conditions can make code harder to follow. The conditions were simplified into an early return instead of creating a deeper `if` structure.
+- **Large Classes / God Objects:** The main project does not use classes, so there was no real God Object to refactor. Instead, I created a small example class that had too many responsibilities, such as creating users, sending emails, generating reports, and calculating totals. I then separated these responsibilities into smaller classes.
+- **Commented-Out Code:** I checked the JavaScript files for commented-out code but did not find any actual unused code that had been commented out. The comments that are currently in the project are used to describe parts of the code.
+
+## How did refactoring improve the readability and maintainability of the code?
+
+Refactoring made the code easier to understand because each part now has a clearer purpose.
+
+For example, instead of having all the logic inside `copyIssues()`, the function now mainly coordinates the process while other functions handle specific tasks. This makes it easier to find where something needs to be changed or fixed.
+
+Replacing hardcoded values with constants also makes the code easier to maintain. If the number of items per page needs to change, I can update `ITEMS_PER_PAGE` instead of searching through the code for the number `100`.
+
+The same applies to duplicated code. Having the pagination logic in one function means that if the GitHub API pagination needs to be changed later, there is only one place that needs to be updated.
+
+The God Object example also showed why classes should not be responsible for too many unrelated things. Separating responsibilities makes each class easier to understand and modify.
+
+Overall, the refactoring did not change what the application is supposed to do. It mainly improved the structure of the code and made it easier to work with.
+
+## How can avoiding code smells make future debugging easier?
+
+Avoiding code smells can make debugging easier because problems are easier to locate when the code is organized and responsibilities are separated.
+
+For example, if there is a problem with pagination, I can look at `fetchAll()` instead of searching through several functions that contain similar pagination code.
+
+Similarly, if there is a problem with creating an issue, I can look at `createIssue()` without having to go through a large function that also handles several unrelated operations.
+
+Clear names and smaller functions also make it easier to understand what the code is doing while debugging. This reduces the amount of code that needs to be checked before finding the source of a problem.
+
+In the future, keeping an eye on code smells should help prevent the codebase from becoming harder to maintain as more features are added.
