@@ -24,7 +24,7 @@ const GITHUB_API = 'https://api.github.com/repos';
 // 🚨 **Milestones to exclude**
 const MILESTONES_TO_EXCLUDE = [];
 
-// Helper function to fetch paginated results
+// Fetches all pages from the GitHub API by continuing while a next page exists.
 async function fetchAll(url) {
   let results = [];
   let page = 1;
