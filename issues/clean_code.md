@@ -208,3 +208,18 @@ The same `milestoneMap[issue.milestone.number]` expression was also used multipl
 I simplified the function by storing the milestone number in a variable and using early returns for the cases where no update was needed.
 
 This made the function easier to follow because it now handles the simple cases first and only reaches the update logic when an update is actually necessary. The code is more readable and easier to maintain while keeping the same functionality.
+
+
+## Commenting & Documentation
+
+### When should you add comments?
+
+Comments should be added when they provide information that is not obvious from the code. They are useful for explaining why something is done, documenting important decisions, or describing behavior that may not be immediately clear.
+
+For this issue, I improved a comment in the `fetchAll()` function so that it explains that the function continues fetching pages from the GitHub API while a next page exists. This is more useful than simply saying that it is a helper function for paginated results.
+
+### When should you avoid comments and improve the code instead?
+
+Comments should be avoided when they only describe what the code is already clearly doing. For example, a comment like `// Increment page` above `page++` would not provide much value because the code already makes this obvious.
+
+When code is difficult to understand, it is usually better to improve the code itself by using clearer names, simplifying conditions, or breaking large functions into smaller ones instead of adding more comments.
