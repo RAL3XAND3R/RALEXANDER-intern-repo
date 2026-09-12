@@ -47,3 +47,103 @@ The parameters `price` and `quantity` are also much clearer.
 The main thing I learned from this exercise is that clean code is not simply about making code shorter.
 
 The messy example could technically work, but it requires more effort to understand. The cleaner version makes the intention of the code much more obvious.
+
+
+
+
+## Code Formatting & Style Guides
+
+### Why is code formatting important?
+
+Code formatting is important because it makes code easier to read and understand. When everyone follows the same formatting rules, it is easier to work on the same codebase without having to deal with different styles. It also helps make problems easier to spot and keeps the code more consistent.
+
+For this issue, I used Prettier to automatically format the JavaScript code and keep things like indentation, quotes, line breaks, and spacing consistent.
+
+### Airbnb JavaScript Style Guide
+
+I also reviewed the Airbnb JavaScript Style Guide. It provides conventions for writing clean and consistent JavaScript code. Some of the main ideas include using meaningful names, keeping code readable, avoiding unnecessary complexity, and following consistent syntax and formatting rules.
+
+The guide is useful because it gives developers a common set of rules to follow when working on JavaScript projects.
+
+### What issues did the linter detect?
+
+ESLint did not detect any linting errors after it was configured. I ran `npm run lint` and it completed without showing any errors or warnings.
+
+Even though it did not find problems, configuring ESLint is still useful because it can automatically check the code in the future and help prevent style and code quality issues from being introduced.
+
+### Did formatting the code make it easier to read?
+
+Yes. After running Prettier, the code became easier to read because long lines were broken into smaller sections and the spacing, indentation, quotes, and other formatting were made consistent.
+
+The functionality of the code did not change. Prettier only changed how the code is formatted, which makes it easier for another developer to understand and maintain.
+
+
+  
+
+
+## Naming Variables & Functions
+
+### Why are good variable and function names important?
+
+Good names make code easier to understand without having to read every line of the implementation. A variable name should clearly describe the value it contains, while a function name should describe the action it performs.
+
+For example, a name like `price` is much easier to understand than `x`, and `calculateTotal` explains the purpose of a function better than `calc`.
+
+Good names should be:
+
+- Clear and descriptive.
+- Easy to understand.
+- Consistent with the naming style of the project.
+- Specific enough to explain what the variable represents or what the function does.
+- Not unnecessarily long or complicated.
+
+### Example of unclear names
+
+The following example uses ambiguous names that make the code harder to understand:
+
+```javascript
+function x(a, b) {
+  const z = a * b;
+  return z;
+}
+```
+
+It is not immediately clear what `x`, `a`, `b`, or `z` represent. Someone reading the code would have to look at how the function is used or understand the surrounding code to figure it out.
+
+### Refactored version
+
+I refactored the code by giving the function, parameters, and variable more descriptive names:
+
+```javascript
+function calculateTotal(price, quantity) {
+  const total = price * quantity;
+  return total;
+}
+```
+
+The logic is exactly the same, but the purpose of each part is much clearer:
+
+- `x` was changed to `calculateTotal` because the function calculates a total.
+- `a` was changed to `price` because it represents the price.
+- `b` was changed to `quantity` because it represents the quantity.
+- `z` was changed to `total` because it contains the calculated total.
+
+### What issues can arise from poorly named variables?
+
+Poorly named variables and functions can make code difficult to understand and maintain. Names such as `x`, `data`, `temp`, or `foo` may not provide enough information about what the value represents.
+
+This can lead to misunderstandings, make debugging harder, and force developers to spend more time reading the surrounding code just to understand what a variable or function is supposed to do.
+
+Poor names can also make larger projects harder to maintain because different developers may interpret the same code in different ways.
+
+### How did refactoring improve code readability?
+
+Refactoring the names made the code easier to understand without changing its functionality. With names such as `calculateTotal`, `price`, `quantity`, and `total`, the purpose of the code is much more obvious.
+
+The main improvement was that the reader no longer needs to guess what each variable means. The names provide context directly in the code, which makes it easier to read, understand, and maintain.
+
+### What I Learned
+
+I learned that naming is an important part of writing clean code. Even when the code works correctly, unclear names can make it difficult for other developers, or even myself later, to understand what the code is doing.
+
+Using descriptive names makes the intention of the code clearer and reduces the need for additional comments or explanations.
