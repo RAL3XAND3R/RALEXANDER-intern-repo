@@ -119,6 +119,81 @@ async function fetchAllIssues(repo) {
   return issues;
 }
 
+function shouldSkipIssue(issue) {
+  if (issue.pull_request) {
+    return true;
+  }
+
+  if (
+    issue.milestone &&
+    MILESTONES_TO_EXCLUDE.includes(issue.milestone.title)
+  ) {
+    console.log(
+      `🚫 Skipping issue "${issue.title}" (Milestone: ${issue.milestone.title})`
+    );
+    return true;
+  }
+
+  return false;
+}
+
+function buildIssuePayload(issue) {
+  const payload = {
+    title: issue.title,
+    body: issue.body || '',
+    labels: issue.labels.map((label) => label.name),
+  };
+
+  return payload;
+}
+
+function addMilestoneToPayload(issue, payload, milestoneMap) {
+  if (issue.milestone && milestoneMap[issue.milestone.number]) {
+    payload.milestone = milestoneMap[issue.milestone.number];
+  }
+}
+
+async function updateExistingIssue(
+  issue,
+  existingIssue,
+  milestoneMap
+) {
+  if (
+    issue.milestone &&
+    milestoneMap[issue.milestone.number] &&
+    existingIssue.milestone?.number !==
+      milestoneMap[issue.milestone.number]
+  ) {
+    console.log(`🔄 Updating milestone for issue: ${issue.title}`);
+
+    await axios.patch(
+      `${GITHUB_API}/${DEST_REPO}/issues/${existingIssue.number}`,
+      {
+        milestone: milestoneMap[issue.milestone.number],
+      },
+      HEADERS
+    );
+  } else {
+    console.log(
+      `🔄 Skipping existing issue: ${issue.title} (Milestone is correct)`
+    );
+  }
+}
+
+async function createIssue(issue, payload) {
+  const { data: newIssue } = await axios.post(
+    `${GITHUB_API}/${DEST_REPO}/issues`,
+    payload,
+    HEADERS
+  );
+
+  console.log(
+    `✅ Created issue: ${newIssue.title} (Milestone: ${
+      newIssue.milestone?.title || 'None'
+    })`
+  );
+}
+
 async function copyIssues(milestoneMap) {
   try {
     const existingIssues = await fetchAllIssues(DEST_REPO);
@@ -129,62 +204,21 @@ async function copyIssues(milestoneMap) {
     const sourceIssues = await fetchAllIssues(SOURCE_REPO);
 
     for (const issue of sourceIssues) {
-      if (issue.pull_request) continue; // Skip pull requests
-
-      // 🚨 **Check if issue belongs to an excluded milestone**
-      if (
-        issue.milestone &&
-        MILESTONES_TO_EXCLUDE.includes(issue.milestone.title)
-      ) {
-        console.log(
-          `🚫 Skipping issue "${issue.title}" (Milestone: ${issue.milestone.title})`
-        );
+      if (shouldSkipIssue(issue)) {
         continue;
       }
 
-      const payload = {
-        title: issue.title,
-        body: issue.body || '',
-        labels: issue.labels.map((l) => l.name),
-      };
+      const existingIssue = existingIssueMap.get(issue.title);
 
-      if (issue.milestone && milestoneMap[issue.milestone.number]) {
-        payload.milestone = milestoneMap[issue.milestone.number];
-      }
-
-      if (existingIssueMap.has(issue.title)) {
-        const existingIssue = existingIssueMap.get(issue.title);
-
-        if (
-          issue.milestone &&
-          milestoneMap[issue.milestone.number] &&
-          existingIssue.milestone?.number !==
-            milestoneMap[issue.milestone.number]
-        ) {
-          console.log(`🔄 Updating milestone for issue: ${issue.title}`);
-          await axios.patch(
-            `${GITHUB_API}/${DEST_REPO}/issues/${existingIssue.number}`,
-            {
-              milestone: milestoneMap[issue.milestone.number],
-            },
-            HEADERS
-          );
-        } else {
-          console.log(
-            `🔄 Skipping existing issue: ${issue.title} (Milestone is correct)`
-          );
-        }
+      if (existingIssue) {
+        await updateExistingIssue(issue, existingIssue, milestoneMap);
         continue;
       }
 
-      const { data: newIssue } = await axios.post(
-        `${GITHUB_API}/${DEST_REPO}/issues`,
-        payload,
-        HEADERS
-      );
-      console.log(
-        `✅ Created issue: ${newIssue.title} (Milestone: ${newIssue.milestone?.title || 'None'})`
-      );
+      const payload = buildIssuePayload(issue);
+      addMilestoneToPayload(issue, payload, milestoneMap);
+
+      await createIssue(issue, payload);
     }
   } catch (error) {
     console.error(
