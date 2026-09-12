@@ -147,3 +147,34 @@ The main improvement was that the reader no longer needs to guess what each vari
 I learned that naming is an important part of writing clean code. Even when the code works correctly, unclear names can make it difficult for other developers, or even myself later, to understand what the code is doing.
 
 Using descriptive names makes the intention of the code clearer and reduces the need for additional comments or explanations.
+
+
+
+## Writing Small, Focused Functions
+
+### Why is breaking down functions beneficial?
+
+Breaking down large functions is beneficial because each smaller function can focus on one specific responsibility. This makes the code easier to understand, test, debug, and maintain.
+
+Large functions can become difficult to follow when they handle several different tasks at the same time. Splitting them into smaller functions makes the purpose of each part much clearer.
+
+### Refactoring Example
+
+The `copyIssues()` function was responsible for several different tasks, including filtering issues, creating issue payloads, updating existing issues, creating new issues, and handling the overall process.
+
+I refactored it into smaller functions with clear responsibilities:
+
+- `shouldSkipIssue()` determines whether an issue should be skipped.
+- `buildIssuePayload()` creates the data needed for a new issue.
+- `addMilestoneToPayload()` adds the appropriate milestone to the issue payload.
+- `updateExistingIssue()` updates an existing issue when its milestone needs to be changed.
+- `createIssue()` creates a new issue in the destination repository.
+- `copyIssues()` coordinates the overall process.
+
+### How did refactoring improve the structure of the code?
+
+Before the refactoring, `copyIssues()` contained several different responsibilities in one function, which made it harder to understand and maintain.
+
+After the refactoring, each operation has its own function with a clear responsibility. The main `copyIssues()` function is now easier to follow because it mainly coordinates the different operations instead of containing all of the implementation details.
+
+The functionality of the code was kept the same, but the structure is now cleaner, easier to read, and easier to maintain.
