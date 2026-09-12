@@ -26,6 +26,10 @@ const MILESTONES_TO_EXCLUDE = [];
 
 // Fetches all pages from the GitHub API by continuing while a next page exists.
 async function fetchAll(url) {
+  if (!url) {
+    throw new Error('URL is required');
+  }
+
   let results = [];
   let page = 1;
 
