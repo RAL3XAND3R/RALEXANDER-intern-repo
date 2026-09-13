@@ -1,0 +1,13 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "files": [
+    "**/*.md",
+    "**/*.js",
+    "**/*.json"
+  ],
+  "ignorePaths": [
+    "node_modules/**",
+    "package-lock.json"
+  ]
+}
